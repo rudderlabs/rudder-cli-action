@@ -1,0 +1,70 @@
+name: "Rudderstack Rudder CLI Project Manager"
+description: "Validate and manage Rudder CLI projects through GitHub Actions"
+
+branding:
+  icon: activity
+  color: purple
+
+inputs:
+  location:
+    description: "Path to the folder containing project files"
+    required: true
+  mode:
+    description: "Operation mode. Must be one of: 'validate', 'dry-run', or 'apply'"
+    required: true
+  cli_version:
+    description: "Version of rudder-cli to use"
+    required: false
+    default: "v0.6.1"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Download Rudder CLI
+      shell: bash
+      run: |
+        # Validate minimum CLI version
+        required_version="0.3.0"
+        input_version="${{ inputs.cli_version }}"
+        input_version="${input_version#v}" # Remove 'v' prefix if present
+
+        if ! printf '%s\n' "$required_version" "$input_version" | sort -V -C; then
+          echo "::error::CLI version must be at least v${required_version}. Got: ${{ inputs.cli_version }}"
+          exit 1
+        fi
+
+        curl -L https://github.com/rudderlabs/rudder-iac/releases/download/${{ inputs.cli_version }}/rudder-cli_Linux_x86_64.tar.gz | tar -xz rudder-cli
+        chmod +x rudder-cli
+        sudo mv rudder-cli /usr/local/bin/
+
+    - name: Verify environment
+      shell: bash
+      run: |
+        if [ -z "$RUDDERSTACK_ACCESS_TOKEN" ]; then
+          echo "::error::RUDDERSTACK_ACCESS_TOKEN environment variable is not set. Please set it using repository secrets."
+          exit 1
+        fi
+
+        # Validate mode input
+        if [[ "${{ inputs.mode }}" != "validate" && "${{ inputs.mode }}" != "dry-run" && "${{ inputs.mode }}" != "apply" ]]; then
+          echo "::error::Invalid mode: ${{ inputs.mode }}. Mode must be one of: validate, dry-run, apply"
+          exit 1
+        fi
+
+    - name: Validate project files
+      if: inputs.mode == 'validate'
+      shell: bash
+      run: |
+        rudder-cli validate -l ${{ inputs.location }}
+
+    - name: Perform dry run
+      if: inputs.mode == 'dry-run'
+      shell: bash
+      run: |
+        rudder-cli apply -l ${{ inputs.location }} --dry-run
+
+    - name: Apply project files
+      if: inputs.mode == 'apply'
+      shell: bash
+      run: |
+        rudder-cli apply -l ${{ inputs.location }} --confirm=false
