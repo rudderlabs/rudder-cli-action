@@ -1,0 +1,18 @@
+on:
+  push:
+    branches:
+      - "main"
+name: release-please
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: google-github-actions/release-please-action@v3
+        with:
+          token: ${{ secrets.PAT }}
+          pull-request-title-pattern: "chore: release ${version}"
+          release-type: simple
+          package-name: rudder-cli-action
+          default-branch: main
+          changelog-types: '[{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false},{"type":"refactor","section":"Miscellaneous","hidden":false},{"type":"test","section":"Miscellaneous","hidden":false},{"type":"doc","section":"Documentation","hidden":false}]'
+          bump-minor-pre-major: true
