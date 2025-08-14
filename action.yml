@@ -24,7 +24,7 @@ runs:
       shell: bash
       run: |
         # Validate minimum CLI version
-        required_version="0.3.0"
+        required_version="0.8.0"
         input_version="${{ inputs.cli_version }}"
         input_version="${input_version#v}" # Remove 'v' prefix if present
 
