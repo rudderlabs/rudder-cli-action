@@ -16,3 +16,4 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           config-file: release-please-config.json
+          target-branch: test-release-please

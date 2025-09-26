@@ -4,7 +4,6 @@
     ".": {
       "package-name": "rudder-cli-action",
       "pull-request-title-pattern": "chore: release ${version}",
-      "default-branch": "test-release-please",
       "changelog-types": [
         {"type": "feat", "section": "Features", "hidden": false},
         {"type": "fix", "section": "Bug Fixes", "hidden": false},
