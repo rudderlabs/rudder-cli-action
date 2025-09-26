@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.1.0](https://github.com/rudderlabs/rudder-cli-action/compare/rudder-cli-action-v1.0.1...rudder-cli-action-v1.1.0) (2025-09-26)
+
+
+### Features
+
+* implement new functionality ([b28fd90](https://github.com/rudderlabs/rudder-cli-action/commit/b28fd90410d4813cc0e9d66a8f39f15d760a1695))
+* porting previous tracking-plan action functionalities ([#1](https://github.com/rudderlabs/rudder-cli-action/issues/1)) ([5d698fc](https://github.com/rudderlabs/rudder-cli-action/commit/5d698fc66b552b8ea6046bfa4c7486cfd047c1e4))
+
+
+### Bug Fixes
+
+* address issue with existing feature ([79b9a60](https://github.com/rudderlabs/rudder-cli-action/commit/79b9a60a5bcd629bdc129d7c02ce864f2d85a9ed))
+
 ## [1.0.1](https://github.com/rudderlabs/rudder-cli-action/compare/v1.0.0...v1.0.1) (2025-09-25)
 
 
