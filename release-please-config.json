@@ -1,9 +1,12 @@
 {
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
   "release-type": "simple",
   "packages": {
     ".": {
       "package-name": "rudder-cli-action",
       "pull-request-title-pattern": "chore: release ${version}",
+      "include-v-in-tag": true,
+      "changelog-path": "CHANGELOG.md",
       "changelog-types": [
         {"type": "feat", "section": "Features", "hidden": false},
         {"type": "fix", "section": "Bug Fixes", "hidden": false},
@@ -11,8 +14,7 @@
         {"type": "refactor", "section": "Miscellaneous", "hidden": false},
         {"type": "test", "section": "Miscellaneous", "hidden": false},
         {"type": "doc", "section": "Documentation", "hidden": false}
-      ],
-      "bump-minor-pre-major": true
+      ]
     }
   }
 }
