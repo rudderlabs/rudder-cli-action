@@ -1,0 +1,2 @@
+This is a test feature file for release-please testing.
+It will be used to test conventional commit message parsing.
