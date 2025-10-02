@@ -1,0 +1,2 @@
+This is a test fix file for release-please testing.
+It will be used to test bug fix commit message parsing.
