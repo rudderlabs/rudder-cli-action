@@ -1,0 +1,2 @@
+This is a test documentation file for release-please testing.
+It will be used to test documentation commit message parsing.
