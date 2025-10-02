@@ -33,7 +33,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Validate Project Files
-        uses: rudderlabs/rudder-cli-action@v1.0.0
+        uses: rudderlabs/rudder-cli-action@v1.0.1
         env:
           RUDDERSTACK_ACCESS_TOKEN: ${{ secrets.RUDDER_ACCESS_TOKEN }}
         with:
@@ -47,7 +47,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Apply Project Files
-        uses: rudderlabs/rudder-cli-action@v1.0.0
+        uses: rudderlabs/rudder-cli-action@v1.0.1
         env:
           RUDDERSTACK_ACCESS_TOKEN: ${{ secrets.RUDDER_ACCESS_TOKEN }}
         with:
@@ -61,7 +61,7 @@ jobs:
 | ------------- | ------------------------------------------------------ | -------- | ------- |
 | `location`    | Path to the folder containing Rudder CLI project files | Yes      | N/A     |
 | `mode`        | Operation mode (`validate`, `dry-run`, or `apply`)     | Yes      | N/A     |
-| `cli_version` | Version of rudder-cli to use                           | No       | v0.2.0  |
+| `cli_version` | Version of rudder-cli to use                           | No       | v0.10.0 |
 
 ### Environment Variables
 
