@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - "main"
+      - "test-main"
 permissions:
   contents: write
   issues: write
@@ -16,3 +17,4 @@ jobs:
           token: ${{ secrets.PAT }}
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
+          target-branch: ${{ github.ref_name }}
