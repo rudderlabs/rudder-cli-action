@@ -6,7 +6,7 @@
       "package-name": "rudder-cli-action",
       "pull-request-title-pattern": "chore: release ${version}",
       "include-v-in-tag": true,
-      "changelog-path": "CHANGELOG.md",
+      "changelog-path": "TEST-CHANGELOG.md",
       "changelog-types": [
         {"type": "feat", "section": "Features", "hidden": false},
         {"type": "fix", "section": "Bug Fixes", "hidden": false},
