@@ -11,6 +11,11 @@ jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit
+
       - uses: googleapis/release-please-action@v4
         with:
           token: ${{ secrets.PAT }}
