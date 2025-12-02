@@ -33,7 +33,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Validate Project Files
-        uses: rudderlabs/rudder-cli-action@v1.0.1
+        uses: rudderlabs/rudder-cli-action@<version>
         env:
           RUDDERSTACK_ACCESS_TOKEN: ${{ secrets.RUDDER_ACCESS_TOKEN }}
         with:
@@ -47,7 +47,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Apply Project Files
-        uses: rudderlabs/rudder-cli-action@v1.0.1
+        uses: rudderlabs/rudder-cli-action@<version>
         env:
           RUDDERSTACK_ACCESS_TOKEN: ${{ secrets.RUDDER_ACCESS_TOKEN }}
         with:
