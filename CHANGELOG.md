@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.2.0](https://github.com/rudderlabs/rudder-cli-action/compare/rudder-cli-action-v1.1.0...rudder-cli-action-v1.2.0) (2025-12-15)
+
+
+### Features
+
+* add ability to override merged commit message ([ccf8b24](https://github.com/rudderlabs/rudder-cli-action/commit/ccf8b2495e79be4b0064ed767360895902cc2fed))
+* add ability to override merged commit message ([b86f268](https://github.com/rudderlabs/rudder-cli-action/commit/b86f2685b02e13a73e62ee8979402a674d90c863))
+* add ability to override merged commit message ([8feac9a](https://github.com/rudderlabs/rudder-cli-action/commit/8feac9a67c0a095ab1d01e131e36f3e503677360))
+* add ability to override merged commit message ([da8cb88](https://github.com/rudderlabs/rudder-cli-action/commit/da8cb881926772793a7bcb3ca82c1b7178f02047))
+
+
+### Bug Fixes
+
+* another message ([ccf8b24](https://github.com/rudderlabs/rudder-cli-action/commit/ccf8b2495e79be4b0064ed767360895902cc2fed))
+* another message ([b86f268](https://github.com/rudderlabs/rudder-cli-action/commit/b86f2685b02e13a73e62ee8979402a674d90c863))
+* another message ([8feac9a](https://github.com/rudderlabs/rudder-cli-action/commit/8feac9a67c0a095ab1d01e131e36f3e503677360))
+* another message ([da8cb88](https://github.com/rudderlabs/rudder-cli-action/commit/da8cb881926772793a7bcb3ca82c1b7178f02047))
+
 ## [1.1.0](https://github.com/rudderlabs/rudder-cli-action/compare/rudder-cli-action-v1.0.1...rudder-cli-action-v1.1.0) (2025-11-18)
 
 
