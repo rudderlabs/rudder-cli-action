@@ -61,7 +61,7 @@ jobs:
 | ------------- | ------------------------------------------------------ | -------- | ------- |
 | `location`    | Path to the folder containing Rudder CLI project files | Yes      | N/A     |
 | `mode`        | Operation mode (`validate`, `dry-run`, or `apply`)     | Yes      | N/A     |
-| `cli_version` | Version of rudder-cli to use                           | No       | v0.12.0 |
+| `cli_version` | Version of rudder-cli to use                           | No       | v0.12.1 |
 
 ### Environment Variables
 
