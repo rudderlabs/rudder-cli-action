@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/rudderlabs/rudder-cli-action/compare/rudder-cli-action-v1.2.0...rudder-cli-action-v1.3.0) (2025-12-18)
+
+
+### Features
+
+* upgrade CLI version to v0.12.1 ([#22](https://github.com/rudderlabs/rudder-cli-action/issues/22)) ([5e114e6](https://github.com/rudderlabs/rudder-cli-action/commit/5e114e643f0fa3930913e37049d8365419002209))
+
 ## [1.2.0](https://github.com/rudderlabs/rudder-cli-action/compare/rudder-cli-action-v1.1.0...rudder-cli-action-v1.2.0) (2025-12-15)
 
 
