@@ -19,7 +19,7 @@ inputs:
   cli_version:
     description: "Version of rudder-cli to use"
     required: false
-    default: "v0.12.1"
+    default: "v0.13.0"
 
 runs:
   using: "composite"
@@ -28,7 +28,7 @@ runs:
       shell: bash
       run: |
         # Validate minimum CLI version
-        required_version="0.8.0"
+        required_version="0.13.0"
         input_version="${{ inputs.cli_version }}"
         input_version="${input_version#v}" # Remove 'v' prefix if present
 
