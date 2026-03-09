@@ -1,0 +1,44 @@
+name: Test Transformations
+
+on:
+  pull_request:
+    branches:
+      - main
+    # Only run when transformation-related files change
+    # Adjust paths below based on where your transformations are located
+    paths:
+      - "transformations-project/**"
+      - ".github/workflows/test-transformations.yml"
+
+jobs:
+  test-all-transformations:
+    runs-on: ubuntu-latest
+    name: Test All Transformations
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run transformation tests (all)
+        uses: ./test
+        env:
+          RUDDERSTACK_ACCESS_TOKEN: ${{ secrets.RUDDERSTACK_ACCESS_TOKEN }}
+        with:
+          location: "transformations-project/"
+          scope: "all"
+          verbose: "true"
+
+  test-modified-transformations:
+    runs-on: ubuntu-latest
+    name: Test Modified Transformations Only
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run transformation tests (modified only)
+        uses: ./test
+        env:
+          RUDDERSTACK_ACCESS_TOKEN: ${{ secrets.RUDDERSTACK_ACCESS_TOKEN }}
+        with:
+          location: "transformations-project/"
+          scope: "modified"
+          verbose: "true"

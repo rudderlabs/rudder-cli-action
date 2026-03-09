@@ -1,0 +1,14 @@
+version: rudder/v1
+kind: transformation
+metadata:
+  name: my-transformation
+spec:
+  id: my-transformation
+  name: My Transformation
+  description: Add static metadata to each incoming event
+  language: javascript
+  file: javascript/my-transformation.js
+  tests:
+    - name: Basic payload test
+      input: ./tests/input
+      output: ./tests/output

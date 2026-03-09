@@ -1,0 +1,11 @@
+version: rudder/v1
+kind: transformation-library
+metadata:
+  name: my-library
+spec:
+  id: my-library
+  name: My Library
+  description: Shared helper utilities
+  language: javascript
+  file: javascript/my-library.js
+  import_name: myLibrary

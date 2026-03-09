@@ -1,0 +1,76 @@
+[
+  {
+    "anonymousId": "sample_anonymous_id",
+    "channel": "web",
+    "context": {
+      "app": {
+        "installType": "npm",
+        "name": "RudderLabs JavaScript SDK",
+        "namespace": "com.rudderlabs.javascript",
+        "version": "3.7.6"
+      },
+      "campaign": {},
+      "library": {
+        "name": "RudderLabs JavaScript SDK",
+        "version": "3.7.6"
+      },
+      "locale": "en-US",
+      "os": {
+        "name": "",
+        "version": ""
+      },
+      "page": {
+        "initial_referrer": "$direct",
+        "initial_referring_domain": "",
+        "path": "/path",
+        "referrer": "https://www.website.com/product",
+        "referring_domain": "website.com",
+        "search": "",
+        "tab_url": "https://www.website.com/product/path",
+        "title": "RS 101",
+        "url": "https://www.website.com/product/path"
+      },
+      "screen": {
+        "density": 1,
+        "height": 1200,
+        "innerHeight": 1065,
+        "innerWidth": 1643,
+        "width": 1920
+      },
+      "sessionId": 1729093483760,
+      "sessionStart": true,
+      "timezone": "GMT-0500",
+      "traits": {
+        "email": "alex@example.com",
+        "name": "Alex Keener",
+        "phone": "+11234567891"
+      },
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+    },
+    "event": "Product Click",
+    "integrations": {
+      "All": true
+    },
+    "messageId": "2",
+    "originalTimestamp": "2024-10-16T15:45:18.782Z",
+    "properties": {
+      "brand": "Wyatt Games",
+      "category": "Games",
+      "coupon": "PREORDER15",
+      "image_url": "https://www.website.com/product/path",
+      "name": "cones of Dunshire",
+      "position": 1,
+      "price": 49.99,
+      "product_id": "622c6f5d5cf86a4c77358033",
+      "quantity": 5,
+      "sku": "8472-998-0112",
+      "variant": "expansion pack"
+    },
+    "receivedAt": "2024-10-16T15:45:19.033Z",
+    "request_ip": "104.176.44.185",
+    "rudderId": "c2160424-86f9-4868-908e-193da5752ec7",
+    "sentAt": "2024-10-16T15:45:18.783Z",
+    "type": "track",
+    "userId": "sample_user_id"
+  }
+]
