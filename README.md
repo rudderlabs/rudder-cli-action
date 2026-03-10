@@ -62,7 +62,7 @@ jobs:
 | ------------- | ------------------------------------------------------ | -------- | ------- |
 | `location`    | Path to the folder containing Rudder CLI project files | Yes      | N/A     |
 | `mode`        | Operation mode (`validate`, `dry-run`, or `apply`)     | Yes      | N/A     |
-| `cli_version` | Version of rudder-cli to use                           | No       | v0.12.1 |
+| `cli_version` | Version of rudder-cli to use                           | No       | v0.13.1 |
 
 ### Environment Variables
 
@@ -89,7 +89,7 @@ jobs:
 
 A separate test action is available for testing transformation code. This action executes transformation code against test events and reports pass/fail results.
 
-> **Note:** The test action is located at `/test` in this repository. Use `rudderlabs/rudder-cli-action/test@<version>` to reference it.
+> **Note:** The test action is located at `/transformations-test` in this repository. Use `rudderlabs/rudder-cli-action/transformations-test@<version>` to reference it.
 
 ### Test Action Usage
 
@@ -108,7 +108,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Test All Transformations
-        uses: rudderlabs/rudder-cli-action/test@<version>
+        uses: rudderlabs/rudder-cli-action/transformations-test@<version>
         env:
           RUDDERSTACK_ACCESS_TOKEN: ${{ secrets.RUDDER_ACCESS_TOKEN }}
         with:
@@ -119,12 +119,12 @@ jobs:
 
 ### Test Action Inputs
 
-| Input         | Description                                                 | Required | Default |
-| ------------- | ----------------------------------------------------------- | -------- | ------- |
-| `location`    | Path to the folder containing Rudder CLI project files      | Yes      | N/A     |
-| `scope`       | Test scope: `all`, `modified`, or transformation/library ID | Yes      | N/A     |
-| `verbose`     | Show detailed test output with diffs for failures           | No       | false   |
-| `cli_version` | Version of rudder-cli to use                                | No       | v0.13.0 |
+| Input         | Description                                            | Required | Default |
+| ------------- | ------------------------------------------------------ | -------- | ------- |
+| `location`    | Path to the folder containing Rudder CLI project files | Yes      | N/A     |
+| `scope`       | Test scope: `all` or `modified`                        | Yes      | N/A     |
+| `verbose`     | Show detailed test output with diffs for failures      | No       | false   |
+| `cli_version` | Version of rudder-cli to use                           | No       | v0.13.1 |
 
 ### Test Scope Options
 
@@ -140,12 +140,6 @@ jobs:
    ```yaml
    with:
      scope: "modified"
-   ```
-
-3. **Specific ID**: Test a single transformation or library by ID
-   ```yaml
-   with:
-     scope: "my-transformation-id"
    ```
 
 ### Complete Test Workflow Example
@@ -176,7 +170,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Test All Transformations
-        uses: rudderlabs/rudder-cli-action/test@<version>
+        uses: rudderlabs/rudder-cli-action/transformations-test@<version>
         env:
           RUDDERSTACK_ACCESS_TOKEN: ${{ secrets.RUDDER_ACCESS_TOKEN }}
         with:
@@ -190,7 +184,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Test Modified Transformations
-        uses: rudderlabs/rudder-cli-action/test@<version>
+        uses: rudderlabs/rudder-cli-action/transformations-test@<version>
         env:
           RUDDERSTACK_ACCESS_TOKEN: ${{ secrets.RUDDER_ACCESS_TOKEN }}
         with:
@@ -213,24 +207,11 @@ jobs:
           mode: "apply"
 ```
 
-### Testing a Specific Transformation
-
-```yaml
-- name: Test Specific Transformation
-  uses: rudderlabs/rudder-cli-action/test@<version>
-  env:
-    RUDDERSTACK_ACCESS_TOKEN: ${{ secrets.RUDDER_ACCESS_TOKEN }}
-  with:
-    location: "project/"
-    scope: "my-transformation-id"
-    verbose: "true"
-```
-
 ### Test Action Requirements
 
 The transformation test action requires:
 
-- **CLI Version:** v0.13.0 or higher (default: v0.13.0)
+- **CLI Version:** v0.13.1 or higher (default: v0.13.1)
 - **Experimental Features:** The transformations test command is an experimental feature in rudder-cli
 - **Environment:** Same `RUDDERSTACK_ACCESS_TOKEN` required as the main action
 
@@ -251,7 +232,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Test Modified Transformations
-        uses: rudderlabs/rudder-cli-action/test@<version>
+        uses: rudderlabs/rudder-cli-action/transformations-test@<version>
         env:
           RUDDERSTACK_ACCESS_TOKEN: ${{ secrets.RUDDER_ACCESS_TOKEN }}
         with:
@@ -276,9 +257,9 @@ Manages Rudder CLI projects (validate, dry-run, apply).
 
 Tests transformation code against test events.
 
-**Location:** `test/action.yml`
+**Location:** `transformations-test/action.yml`
 
-**Usage:** `uses: rudderlabs/rudder-cli-action/test@<version>`
+**Usage:** `uses: rudderlabs/rudder-cli-action/transformations-test@<version>`
 
 ## Security
 

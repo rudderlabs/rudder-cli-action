@@ -10,7 +10,7 @@ inputs:
     description: "Path to the folder containing project files"
     required: true
   scope:
-    description: "Test scope: 'all', 'modified', or transformation/library ID (e.g., 'my-transformation-id')"
+    description: "Test scope: 'all' or 'modified'"
     required: true
   verbose:
     description: "Show detailed test output with diffs for failures"
@@ -19,7 +19,7 @@ inputs:
   cli_version:
     description: "Version of rudder-cli to use"
     required: false
-    default: "v0.13.0"
+    default: "v0.13.1"
 
 runs:
   using: "composite"
@@ -28,7 +28,7 @@ runs:
       shell: bash
       run: |
         # Validate minimum CLI version
-        required_version="0.13.0"
+        required_version="0.13.1"
         input_version="${{ inputs.cli_version }}"
         input_version="${input_version#v}" # Remove 'v' prefix if present
 
@@ -56,13 +56,14 @@ runs:
 
         # Check for empty scope
         if [ -z "$scope" ]; then
-          echo "::error::scope input cannot be empty. Must be 'all', 'modified', or a transformation/library ID."
+          echo "::error::scope input cannot be empty. Must be 'all' or 'modified'."
           exit 1
         fi
 
-        # Warn if scope looks like a typo
-        if [[ "$scope" =~ ^(al|modifed|modfied)$ ]]; then
-          echo "::warning::Did you mean 'all' or 'modified'? Got: $scope"
+        # Validate scope value
+        if [[ "$scope" != "all" && "$scope" != "modified" ]]; then
+          echo "::error::Invalid scope: $scope. Must be 'all' or 'modified'."
+          exit 1
         fi
 
     - name: Set github action version and platform
@@ -73,23 +74,24 @@ runs:
         echo "CI platform: github-actions"
         echo "Workflow version: ${{ github.action_ref }}"
 
-    - name: Run transformation tests
+    - name: Set verbose flag
       shell: bash
       run: |
-        scope="${{ inputs.scope }}"
-        verbose_flag=""
-
         if [ "${{ inputs.verbose }}" == "true" ]; then
-          verbose_flag="--verbose"
+          echo "VERBOSE_FLAG=--verbose" >> $GITHUB_ENV
+          echo "Verbose output enabled"
+        else
+          echo "VERBOSE_FLAG=" >> $GITHUB_ENV
         fi
 
-        if [ "$scope" == "all" ]; then
-          echo "Running tests for all transformations..."
-          rudder-cli transformations test --all $verbose_flag -l ${{ inputs.location }}
-        elif [ "$scope" == "modified" ]; then
-          echo "Running tests for modified transformations..."
-          rudder-cli transformations test --modified $verbose_flag -l ${{ inputs.location }}
-        else
-          echo "Running tests for transformation/library: $scope"
-          rudder-cli transformations test "$scope" $verbose_flag -l ${{ inputs.location }}
-        fi
+    - name: Test all transformations
+      if: inputs.scope == 'all'
+      shell: bash
+      run: |
+        rudder-cli transformations test --all $VERBOSE_FLAG -l ${{ inputs.location }}
+
+    - name: Test modified transformations
+      if: inputs.scope == 'modified'
+      shell: bash
+      run: |
+        rudder-cli transformations test --modified $VERBOSE_FLAG -l ${{ inputs.location }}
