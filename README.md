@@ -253,7 +253,7 @@ Manages Rudder CLI projects (validate, dry-run, apply).
 
 **Usage:** `uses: rudderlabs/rudder-cli-action@<version>`
 
-### Test Action (`rudderlabs/rudder-cli-action/test`)
+### Test Action (`rudderlabs/rudder-cli-action/transformations-test`)
 
 Tests transformation code against test events.
 
