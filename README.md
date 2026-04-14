@@ -62,7 +62,7 @@ jobs:
 | ------------- | ------------------------------------------------------ | -------- | ------- |
 | `location`    | Path to the folder containing Rudder CLI project files | Yes      | N/A     |
 | `mode`        | Operation mode (`validate`, `dry-run`, or `apply`)     | Yes      | N/A     |
-| `cli_version` | Version of rudder-cli to use                           | No       | v0.13.1 |
+| `cli_version` | Version of rudder-cli to use                           | No       | v0.14.0 |
 
 ### Environment Variables
 
@@ -124,7 +124,7 @@ jobs:
 | `location`    | Path to the folder containing Rudder CLI project files | Yes      | N/A     |
 | `scope`       | Test scope: `all` or `modified`                        | Yes      | N/A     |
 | `verbose`     | Show detailed test output with diffs for failures      | No       | false   |
-| `cli_version` | Version of rudder-cli to use                           | No       | v0.13.1 |
+| `cli_version` | Version of rudder-cli to use                           | No       | v0.14.0 |
 
 ### Test Scope Options
 
@@ -211,8 +211,7 @@ jobs:
 
 The transformation test action requires:
 
-- **CLI Version:** v0.13.1 or higher (default: v0.13.1)
-- **Experimental Features:** The transformations test command is an experimental feature in rudder-cli
+- **CLI Version:** v0.14.0 or higher (default: v0.14.0)
 - **Environment:** Same `RUDDERSTACK_ACCESS_TOKEN` required as the main action
 
 ### Common Test Workflow Patterns
