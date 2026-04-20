@@ -1,0 +1,97 @@
+name: "Rudderstack Transformation Test Runner"
+description: "Test transformations in Rudder CLI projects"
+
+branding:
+  icon: check-circle
+  color: purple
+
+inputs:
+  location:
+    description: "Path to the folder containing project files"
+    required: true
+  scope:
+    description: "Test scope: 'all' or 'modified'"
+    required: true
+  verbose:
+    description: "Show detailed test output with diffs for failures"
+    required: false
+    default: "false"
+  cli_version:
+    description: "Version of rudder-cli to use"
+    required: false
+    default: "v0.14.0"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Download Rudder CLI
+      shell: bash
+      run: |
+        # Validate minimum CLI version
+        required_version="0.14.0"
+        input_version="${{ inputs.cli_version }}"
+        input_version="${input_version#v}" # Remove 'v' prefix if present
+
+        if ! printf '%s\n' "$required_version" "$input_version" | sort -V -C; then
+          echo "::error::CLI version must be at least v${required_version}. Got: ${{ inputs.cli_version }}"
+          exit 1
+        fi
+
+        curl -L https://github.com/rudderlabs/rudder-iac/releases/download/${{ inputs.cli_version }}/rudder-cli_Linux_x86_64.tar.gz | tar -xz rudder-cli
+        chmod +x rudder-cli
+        sudo mv rudder-cli /usr/local/bin/
+
+    - name: Verify environment
+      shell: bash
+      run: |
+        if [ -z "$RUDDERSTACK_ACCESS_TOKEN" ]; then
+          echo "::error::RUDDERSTACK_ACCESS_TOKEN environment variable is not set. Please set it using repository secrets."
+          exit 1
+        fi
+
+    - name: Validate inputs
+      shell: bash
+      run: |
+        scope="${{ inputs.scope }}"
+
+        # Check for empty scope
+        if [ -z "$scope" ]; then
+          echo "::error::scope input cannot be empty. Must be 'all' or 'modified'."
+          exit 1
+        fi
+
+        # Validate scope value
+        if [[ "$scope" != "all" && "$scope" != "modified" ]]; then
+          echo "::error::Invalid scope: $scope. Must be 'all' or 'modified'."
+          exit 1
+        fi
+
+    - name: Set github action version and platform
+      shell: bash
+      run: |
+        echo "RUDDERSTACK_CLI_CI_PLATFORM=github-actions" >> $GITHUB_ENV
+        echo "RUDDERSTACK_CLI_WORKFLOW_VERSION=${{ github.action_ref }}" >> $GITHUB_ENV
+        echo "CI platform: github-actions"
+        echo "Workflow version: ${{ github.action_ref }}"
+
+    - name: Set verbose flag
+      shell: bash
+      run: |
+        if [ "${{ inputs.verbose }}" == "true" ]; then
+          echo "VERBOSE_FLAG=--verbose" >> $GITHUB_ENV
+          echo "Verbose output enabled"
+        else
+          echo "VERBOSE_FLAG=" >> $GITHUB_ENV
+        fi
+
+    - name: Test all transformations
+      if: inputs.scope == 'all'
+      shell: bash
+      run: |
+        rudder-cli transformations test --all $VERBOSE_FLAG -l ${{ inputs.location }}
+
+    - name: Test modified transformations
+      if: inputs.scope == 'modified'
+      shell: bash
+      run: |
+        rudder-cli transformations test --modified $VERBOSE_FLAG -l ${{ inputs.location }}
