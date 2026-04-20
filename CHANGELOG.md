@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.5.0](https://github.com/rudderlabs/rudder-cli-action/compare/rudder-cli-action-v1.4.0...rudder-cli-action-v1.5.0) (2026-04-20)
+
+
+### Features
+
+* support test command integration ([#25](https://github.com/rudderlabs/rudder-cli-action/issues/25)) ([43e5083](https://github.com/rudderlabs/rudder-cli-action/commit/43e50838fd5c5c12bc7b2536a8212bccf6d5cceb))
+
+
+### Bug Fixes
+
+* **vuln:** pin and bump action refs (SEC-171) ([#27](https://github.com/rudderlabs/rudder-cli-action/issues/27)) ([6141e8f](https://github.com/rudderlabs/rudder-cli-action/commit/6141e8fb243fc949d37b322f72ded7cb98d95dc7))
+
 ## [1.4.0](https://github.com/rudderlabs/rudder-cli-action/compare/rudder-cli-action-v1.3.0...rudder-cli-action-v1.4.0) (2026-04-14)
 
 
