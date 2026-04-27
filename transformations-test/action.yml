@@ -69,7 +69,9 @@ runs:
     - name: Set github action version and platform
       shell: bash
       run: |
+        # zizmor: ignore[github-env]  # literal value, not user-controlled
         echo "RUDDERSTACK_CLI_CI_PLATFORM=github-actions" >> $GITHUB_ENV
+        # zizmor: ignore[github-env]  # github.action_ref is the action's own ref, not user-controlled
         echo "RUDDERSTACK_CLI_WORKFLOW_VERSION=${{ github.action_ref }}" >> $GITHUB_ENV
         echo "CI platform: github-actions"
         echo "Workflow version: ${{ github.action_ref }}"
