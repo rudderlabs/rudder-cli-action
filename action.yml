@@ -22,23 +22,27 @@ runs:
   steps:
     - name: Download Rudder CLI
       shell: bash
+      env:
+        INPUT_CLI_VERSION: ${{ inputs.cli_version }}
       run: |
         # Validate minimum CLI version
         required_version="0.8.0"
-        input_version="${{ inputs.cli_version }}"
+        input_version="$INPUT_CLI_VERSION"
         input_version="${input_version#v}" # Remove 'v' prefix if present
 
         if ! printf '%s\n' "$required_version" "$input_version" | sort -V -C; then
-          echo "::error::CLI version must be at least v${required_version}. Got: ${{ inputs.cli_version }}"
+          echo "::error::CLI version must be at least v${required_version}. Got: $INPUT_CLI_VERSION"
           exit 1
         fi
 
-        curl -L https://github.com/rudderlabs/rudder-iac/releases/download/${{ inputs.cli_version }}/rudder-cli_Linux_x86_64.tar.gz | tar -xz rudder-cli
+        curl -L "https://github.com/rudderlabs/rudder-iac/releases/download/$INPUT_CLI_VERSION/rudder-cli_Linux_x86_64.tar.gz" | tar -xz rudder-cli
         chmod +x rudder-cli
         sudo mv rudder-cli /usr/local/bin/
 
     - name: Verify environment
       shell: bash
+      env:
+        INPUT_MODE: ${{ inputs.mode }}
       run: |
         if [ -z "$RUDDERSTACK_ACCESS_TOKEN" ]; then
           echo "::error::RUDDERSTACK_ACCESS_TOKEN environment variable is not set. Please set it using repository secrets."
@@ -46,35 +50,43 @@ runs:
         fi
 
         # Validate mode input
-        if [[ "${{ inputs.mode }}" != "validate" && "${{ inputs.mode }}" != "dry-run" && "${{ inputs.mode }}" != "apply" ]]; then
-          echo "::error::Invalid mode: ${{ inputs.mode }}. Mode must be one of: validate, dry-run, apply"
+        if [[ "$INPUT_MODE" != "validate" && "$INPUT_MODE" != "dry-run" && "$INPUT_MODE" != "apply" ]]; then
+          echo "::error::Invalid mode: $INPUT_MODE. Mode must be one of: validate, dry-run, apply"
           exit 1
         fi
 
     - name: Set github action version and platform
       shell: bash
+      env:
+        ACTION_REF: ${{ github.action_ref }}
       run: |
         # zizmor: ignore[github-env]  # literal value, not user-controlled
         echo "RUDDERSTACK_CLI_CI_PLATFORM=github-actions" >> $GITHUB_ENV
         # zizmor: ignore[github-env]  # github.action_ref is the action's own ref, not user-controlled
-        echo "RUDDERSTACK_CLI_WORKFLOW_VERSION=${{ github.action_ref }}" >> $GITHUB_ENV
+        echo "RUDDERSTACK_CLI_WORKFLOW_VERSION=$ACTION_REF" >> $GITHUB_ENV
         echo "CI platform: github-actions"
-        echo "Workflow version: ${{ github.action_ref }}"
+        echo "Workflow version: $ACTION_REF"
 
     - name: Validate project files
       if: inputs.mode == 'validate'
       shell: bash
+      env:
+        INPUT_LOCATION: ${{ inputs.location }}
       run: |
-        rudder-cli validate -l ${{ inputs.location }}
+        rudder-cli validate -l "$INPUT_LOCATION"
 
     - name: Perform dry run
       if: inputs.mode == 'dry-run'
       shell: bash
+      env:
+        INPUT_LOCATION: ${{ inputs.location }}
       run: |
-        rudder-cli apply -l ${{ inputs.location }} --dry-run
+        rudder-cli apply -l "$INPUT_LOCATION" --dry-run
 
     - name: Apply project files
       if: inputs.mode == 'apply'
       shell: bash
+      env:
+        INPUT_LOCATION: ${{ inputs.location }}
       run: |
-        rudder-cli apply -l ${{ inputs.location }} --confirm=false
+        rudder-cli apply -l "$INPUT_LOCATION" --confirm=false
