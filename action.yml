@@ -56,22 +56,23 @@ runs:
         fi
 
     - name: Set github action version and platform
+      id: set-env
       shell: bash
       env:
         ACTION_REF: ${{ github.action_ref }}
       run: |
-        # zizmor: ignore[github-env]  # literal value, not user-controlled
-        echo "RUDDERSTACK_CLI_CI_PLATFORM=github-actions" >> $GITHUB_ENV
-        # zizmor: ignore[github-env]  # github.action_ref is the action's own ref, not user-controlled
-        echo "RUDDERSTACK_CLI_WORKFLOW_VERSION=$ACTION_REF" >> $GITHUB_ENV
+        echo "RUDDERSTACK_CLI_CI_PLATFORM=github-actions" >> "$GITHUB_OUTPUT"
+        echo "RUDDERSTACK_CLI_WORKFLOW_VERSION=${ACTION_REF}" >> "$GITHUB_OUTPUT"
         echo "CI platform: github-actions"
-        echo "Workflow version: $ACTION_REF"
+        echo "Workflow version: ${ACTION_REF}"
 
     - name: Validate project files
       if: inputs.mode == 'validate'
       shell: bash
       env:
         INPUT_LOCATION: ${{ inputs.location }}
+        RUDDERSTACK_CLI_CI_PLATFORM: ${{ steps.set-env.outputs.RUDDERSTACK_CLI_CI_PLATFORM }}
+        RUDDERSTACK_CLI_WORKFLOW_VERSION: ${{ steps.set-env.outputs.RUDDERSTACK_CLI_WORKFLOW_VERSION }}
       run: |
         rudder-cli validate -l "$INPUT_LOCATION"
 
@@ -80,6 +81,8 @@ runs:
       shell: bash
       env:
         INPUT_LOCATION: ${{ inputs.location }}
+        RUDDERSTACK_CLI_CI_PLATFORM: ${{ steps.set-env.outputs.RUDDERSTACK_CLI_CI_PLATFORM }}
+        RUDDERSTACK_CLI_WORKFLOW_VERSION: ${{ steps.set-env.outputs.RUDDERSTACK_CLI_WORKFLOW_VERSION }}
       run: |
         rudder-cli apply -l "$INPUT_LOCATION" --dry-run
 
@@ -88,5 +91,7 @@ runs:
       shell: bash
       env:
         INPUT_LOCATION: ${{ inputs.location }}
+        RUDDERSTACK_CLI_CI_PLATFORM: ${{ steps.set-env.outputs.RUDDERSTACK_CLI_CI_PLATFORM }}
+        RUDDERSTACK_CLI_WORKFLOW_VERSION: ${{ steps.set-env.outputs.RUDDERSTACK_CLI_WORKFLOW_VERSION }}
       run: |
         rudder-cli apply -l "$INPUT_LOCATION" --confirm=false
